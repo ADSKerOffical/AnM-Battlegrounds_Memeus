@@ -1,3 +1,95 @@
+local tool = Instance.new("Tool")
+tool.Name = "Screamer"
+tool.RequiresHandle = false
+tool.ToolTip = "UUUAARGHHHHHH"
+local cooldown = 10
+
+local isCooldown = false
+tool.Activated:Connect(function()
+if isCooldown then return end
+    isCooldown = true
+last_pick_sin_mrazy = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+local localPlayer = game.Players.LocalPlayer
+Spooky = Instance.new("Sound", game.Workspace)
+Spooky.Name = "Cave"
+Spooky.SoundId = "rbxassetid://3173566193"
+Spooky.Volume = 3
+Spooky.PlaybackSpeed = 1
+Spooky.Pitch = 0.9
+Spooky.Looped = false
+Spooky:Play()
+local function getNearestPlayer()
+    local nearestPlayer = nil
+    local nearestDistance = math.huge
+    
+    for _, player in pairs(game.Players:GetPlayers()) do
+        if player ~= localPlayer and player.Character and player.Character:FindFirstChild("Humanoid") then
+            local distance = (player.Character.HumanoidRootPart.Position - localPlayer.Character.HumanoidRootPart.Position).Magnitude
+            if distance < nearestDistance then
+                nearestPlayer = player
+                nearestDistance = distance
+            end
+        end
+    end
+    
+    return nearestPlayer
+end
+
+local function teleportToSelf()
+    localPlayer.Character.HumanoidRootPart.CFrame = localPlayer.Character.HumanoidRootPart.CFrame
+end
+
+local function followNearestPlayer()
+    local nearestPlayer = getNearestPlayer()
+    if nearestPlayer and nearestPlayer.Character and nearestPlayer.Character:FindFirstChild("Humanoid") and nearestPlayer.Character.Humanoid.Health > 0 then
+        localPlayer.Character.Humanoid:MoveTo(nearestPlayer.Character.HumanoidRootPart.Position)
+        
+        local nearestPlayerConnectionId = nearestPlayer.Character.HumanoidRootPart:GetPropertyChangedSignal("Position"):Connect(function() localPlayer.Character.Humanoid:MoveTo(nearestPlayer.Character.HumanoidRootPart.Position)
+        end)
+        
+        local nearestPlayerDeathConnectionId = nearestPlayer.Character.Humanoid.Died:Connect(function()
+            nearestPlayerConnectionId:Disconnect()
+            
+            teleportToSelf()
+        end)
+        
+        repeat
+            game:GetService("RunService").Heartbeat:Wait()
+     local player = game.Players.LocalPlayer
+local parts = workspace:GetPartBoundsInRadius(player.Character:WaitForChild("HumanoidRootPart").Position, 10)
+    local foundEntity = false
+    for _, part in ipairs(parts) do
+        if (part:IsA("BasePart") or part:IsA("UnionOperation") or part:IsA("Model")) and not part.Anchored and part:IsDescendantOf(workspace) and not part:IsDescendantOf(player.Character) then
+            foundEntity = true
+            if part then
+game:GetService("ReplicatedStorage").Remotes.Punches:FireServer()
+            end
+            break
+        end
+    end
+localPlayer.Character.Humanoid.WalkSpeed = 200
+            followNearestPlayer()
+        until nearestPlayer.Character.Humanoid.Health <= 0 or localPlayer.Character.Humanoid.Health <= 0
+        
+        nearestPlayerConnectionId:Disconnect()
+        nearestPlayerDeathConnectionId:Disconnect()
+       
+        teleportToSelf()
+    else
+        
+    end
+if nearestPlayer.Character.Humanoid.Health <= 0 then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = last_pick_sin_mrazy
+end
+end
+
+followNearestPlayer()
+wait(cooldown)
+    isCooldown = false
+end)
+
+tool.Parent = game.Players.LocalPlayer.Backpack
+
 tool = Instance.new("Tool")
 tool.RequiresHandle = false
 tool.Name = "Get Random Pencil"
