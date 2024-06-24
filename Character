@@ -1,3 +1,277 @@
+local function buffe()
+local Player = game:GetService("Players").LocalPlayer
+local Backpack = Player.Backpack
+local Character = Player.Character
+
+for _,v in pairs(Backpack:GetChildren()) do
+   if v:IsA("Tool") or v:IsA("HopperBin") then
+     if v.Name == "Martial Punch" or v.Name == "Grab" or v.Name == "Grab Slam" or v.Name == "Serious" or v.Name == "Head Beatdown" then
+       v:Destroy()
+     end
+   end
+end
+
+for _,v in pairs(Character:GetChildren()) do
+   if v:IsA("Tool") or v:IsA("HopperBin") then
+     if v.Name == "Martial Punch" or v.Name == "Grab" or v.Name == "Grab Slam" or v.Name == "Serious" or v.Name == "Head Beatdown" then
+       v:Destroy()
+     end
+   end 
+end
+repeat wait()
+if game.Players.LocalPlayer.Character.Humanoid.WalkSpeed <= 80 then
+  game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 90
+end
+ game:GetService("ReplicatedStorage").AtomicFolder.gaydog:FireServer()
+until game.Players.LocalPlayer.Character.Humanoid.Health <= 0
+end
+
+local function walkanim()
+local player = game.Players.LocalPlayer.Character
+local Animwalk = Instance.new("Animation")
+Animwalk.AnimationId = "rbxassetid://14806125490"
+local Animrun = Instance.new("Animation")
+Animrun.AnimationId = "rbxassetid://14750226030"
+
+local walkAnimation = game:GetService("Players").LocalPlayer.Character.Humanoid:LoadAnimation(Animwalk)
+local runAnimation = game:GetService("Players").LocalPlayer.Character.Humanoid:LoadAnimation(Animrun)
+
+function startWalkAnimation()
+    walkAnimation:Play()
+end
+
+function startRunAnimation()
+    runAnimation:Play()
+end
+
+function stopAnimation()
+    walkAnimation:Stop()
+    runAnimation:Stop()
+end
+
+local humanoid = player:WaitForChild("Humanoid")
+humanoid.Running:Connect(function(speed)
+    if speed > 0 then
+        if speed > 40 then
+        walkAnimation:Stop()
+            startRunAnimation()
+        else
+        runAnimation:Stop()
+            startWalkAnimation()
+        end
+    else
+        stopAnimation()
+    end
+end)
+
+humanoid.Died:Connect(function()
+    stopAnimation()
+    script:Destroy()
+end)
+end
+
+local function godmod()
+local ohString1 = "Ayanokoji Kiyotaka"
+game:GetService("ReplicatedStorage").Picked:FireServer(ohString1)
+local LP = game.Players.LocalPlayer
+repeat task.wait()
+        if not LP.Character then
+            continue
+        end
+        
+        for i,v in pairs(LP.Backpack:GetChildren()) do
+            if v.Name == "Dodge" then
+               v.Parent = LP.Character
+               game:GetService("Players").LocalPlayer.Character.Dodge.Skill.Event:FireServer()
+for i, v in pairs(LP.Character:GetChildren()) do
+        if v:IsA("Tool") then
+            v:Activate()
+        end
+    end
+               break
+            end
+        end
+    until LP.Character and game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0
+end
+
+local function Tools()
+local tool = Instance.new("Tool")
+tool.Name = "Super powerful kick"
+tool.RequiresHandle = false
+local cooldown = 1
+
+local isCooldown = false
+tool.Activated:Connect(function()
+if isCooldown then return end
+    isCooldown = true
+for i = 1, 10 do
+game:GetService("ReplicatedStorage").Remotes.KickSlam:FireServer()
+end
+game:GetService("ReplicatedStorage"):FindFirstChild("AfterImageEvent"):FireServer()
+wait(cooldown)
+    isCooldown = false
+end)
+
+tool.Parent = game.Players.LocalPlayer.Backpack
+
+local tool = Instance.new("Tool")
+tool.Name = "Heavenly trash"
+tool.RequiresHandle = false
+local cooldown = 5
+
+local isCooldown = false
+tool.Activated:Connect(function()
+if isCooldown then return end
+    isCooldown = true
+local player = game.Players.LocalPlayer.Character
+local humanoid = player:WaitForChild("Humanoid")
+
+for i = 1, 20 do
+task.wait()
+    humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+end
+
+for i = 1, 15 do
+task.wait()
+game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("ContainerKick"):FireServer()
+end
+wait(cooldown)
+    isCooldown = false
+end)
+
+tool.Parent = game.Players.LocalPlayer.Backpack
+end
+
+local tool = Instance.new("Tool")
+tool.Name = "My losing is impossible!"
+tool.RequiresHandle = false
+tool.ToolTip = "If HP is less 100 then awakening is activated"
+
+tool.Activated:Connect(function()
+if game:GetService("Players").LocalPlayer.Character.Humanoid.Health <= 100 then
+tool:Destroy()
+local Anim = Instance.new("Animation")
+Anim.AnimationId = "rbxassetid://14933768350"
+local k = game:GetService("Players").LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
+k:Play()
+k:AdjustSpeed(1)
+Spookyn = Instance.new("Sound", game.Workspace)
+Spookyn.Name = "Ambient"
+Spookyn.SoundId = "rbxassetid://1836983664"
+Spookyn.Volume = 5
+Spookyn.PlaybackSpeed = 1
+Spookyn.Looped = true
+Spookyn:Play()
+wait(1)
+k:AdjustSpeed(0)
+coroutine.wrap(godmod)()
+wait(5)
+k:AdjustSpeed(0.2)
+Spookyn:Stop()
+coroutine.wrap(buffe)()
+Spooky = Instance.new("Sound", game.Workspace)
+Spooky.Name = "Mega epic sound"
+Spooky.SoundId = "rbxassetid://1843497734"
+Spooky.Volume = 1
+Spooky.PlaybackSpeed = 0.9
+Spooky.Looped = false
+Spooky:Play()
+  task.wait(4)
+k:Stop()
+coroutine.wrap(walkanim)()
+coroutine.wrap(Tools)()
+repeat wait()
+if game.Players.LocalPlayer.Character.Humanoid.Health <= 0 then
+Spooky:Stop()
+end
+until game.Players.LocalPlayer.Character.Humanoid.Health <= 0
+end
+end)
+
+tool.Parent = game.Players.LocalPlayer.Backpack
+
+local tool = Instance.new("Tool")
+tool.Name = "Nani?"
+tool.RequiresHandle = false
+local cooldown = 5
+
+local isCooldown = false
+tool.Activated:Connect(function()
+if isCooldown then return end
+    isCooldown = true
+  local ranmo = math.random(1, 3)
+ if ranmo == 1 then
+for i = 1, 10 do
+game:GetService("ReplicatedStorage").Remotes.PlayfulCloud:FireServer()
+end
+  wait(0.5)
+ game:GetService("ReplicatedStorage"):FindFirstChild("AfterImageEvent"):FireServer()
+ Spooky = Instance.new("Sound", game.Workspace)
+Spooky.Name = "Teleport"
+Spooky.SoundId = "rbxassetid://164320294"
+Spooky.Volume = 1
+Spooky.PlaybackSpeed = 1
+Spooky.Looped = false
+Spooky:Play()
+ elseif ranmo == 2 then
+ local function actone()
+  local count = 0
+repeat wait(0.1)
+ count = count + 1
+  game:GetService("ReplicatedStorage").Remotes.PlayfulCloud:FireServer()
+until count == 20
+end
+
+local function acttwo()
+  local counti = 0
+repeat wait(0.2)
+ counti = counti + 1
+  game:GetService("ReplicatedStorage"):FindFirstChild("AfterImageEvent"):FireServer()
+  Spooky = Instance.new("Sound", game.Workspace)
+Spooky.Name = "Teleport"
+Spooky.SoundId = "rbxassetid://164320294"
+Spooky.Volume = 1
+Spooky.PlaybackSpeed = 1
+Spooky.Looped = false
+Spooky:Play()
+until counti == 10
+end
+
+coroutine.wrap(actone)()
+coroutine.wrap(acttwo)()
+ elseif ranmo == 3 then
+ local function actOnE()
+for i = 1, 3 do
+    wait(1)
+  for i = 1, 10 do
+game:GetService("ReplicatedStorage").Remotes.PlayfulCloud:FireServer()
+    end
+ end
+end
+
+local function actTwO()
+for i = 1, 3 do
+   wait(1) 
+game:GetService("ReplicatedStorage"):FindFirstChild("AfterImageEvent"):FireServer()
+Spooky = Instance.new("Sound", game.Workspace)
+Spooky.Name = "Teleport"
+Spooky.SoundId = "rbxassetid://164320294"
+Spooky.Volume = 1
+Spooky.PlaybackSpeed = 1
+Spooky.Looped = false
+Spooky:Play()
+ end
+end
+
+coroutine.wrap(actOnE)()
+coroutine.wrap(actTwO)()
+end
+wait(cooldown)
+    isCooldown = false
+end)
+
+tool.Parent = game.Players.LocalPlayer.Backpack
+
 local tool = Instance.new("Tool")
 tool.Name = "Screamer"
 tool.RequiresHandle = false
@@ -276,3 +550,26 @@ game.Players.LocalPlayer.CharacterAdded:Connect(onCharacterAdded)
 if game.Players.LocalPlayer.Character then
     onCharacterAdded(game.Players.LocalPlayer.Character)
 end
+
+repeat wait(0.1)
+ if game:GetService("Players").LocalPlayer.Character.Humanoid.Health <= 0 then
+local oip = math.random(1, 2)
+   if oip == 1 then
+   Spooky = Instance.new("Sound", game.Workspace)
+Spooky.Name = "Ahhhhh"
+Spooky.SoundId = "rbxassetid://5814804751"
+Spooky.Volume = 1
+Spooky.PlaybackSpeed = 1
+Spooky.Looped = false 
+Spooky:Play()
+  elseif oip == 2 then
+  Spooky = Instance.new("Sound", game.Workspace)
+Spooky.Name = "Puk"
+Spooky.SoundId = "rbxassetid://130833677"
+Spooky.Volume = 10
+Spooky.PlaybackSpeed = 1
+Spooky.Looped = false
+Spooky:Play()
+   end
+ end
+until game:GetService("Players").LocalPlayer.Character.Humanoid.Health <= 0
