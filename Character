@@ -18,11 +18,43 @@ for _,v in pairs(Character:GetChildren()) do
      end
    end 
 end
-repeat wait()
-if game.Players.LocalPlayer.Character.Humanoid.WalkSpeed <= 80 then
-  game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 90
+local player = game.Players.LocalPlayer.Character
+local humanoid = player:WaitForChild("Humanoid")
+local MAX_SPEED = 300
+local NORMAL_SPEED = 80
+local SPEED_INCREASE_RATE = 0.4
+local SPEED_DECREASE_RATE = 3
+
+local currentSpeed = NORMAL_SPEED
+
+function IncreaseSpeed()
+    if currentSpeed < MAX_SPEED then
+        currentSpeed = math.min(currentSpeed + SPEED_INCREASE_RATE, MAX_SPEED)
+        humanoid.WalkSpeed = currentSpeed
+    end
 end
- game:GetService("ReplicatedStorage").AtomicFolder.gaydog:FireServer()
+
+function DecreaseSpeed()
+    if currentSpeed > NORMAL_SPEED then
+        currentSpeed = math.max(currentSpeed - SPEED_DECREASE_RATE, NORMAL_SPEED)
+        humanoid.WalkSpeed = currentSpeed
+    end
+end
+
+while true do
+    if humanoid.MoveDirection.Magnitude > 0 then
+        IncreaseSpeed()
+    else
+        DecreaseSpeed()
+    end
+
+    wait(0.05)
+end
+end
+
+local function aurad()
+repeat wait(0.05)
+game:GetService("ReplicatedStorage").AtomicFolder.gaydog:FireServer()
 until game.Players.LocalPlayer.Character.Humanoid.Health <= 0
 end
 
@@ -140,6 +172,90 @@ wait(cooldown)
 end)
 
 tool.Parent = game.Players.LocalPlayer.Backpack
+
+local tool = Instance.new("Tool")
+tool.Name = "Slicing"
+tool.RequiresHandle = false
+local cooldown = 10
+
+local isCooldown = false
+tool.Activated:Connect(function()
+if isCooldown then return end
+    isCooldown = true
+local Anim = Instance.new("Animation")
+Anim.AnimationId = "rbxassetid://17866324806"
+local k = game:GetService("Players").LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
+k:Play()
+k:AdjustSpeed(0.6)
+   task.wait()
+   local player = game.Players.LocalPlayer
+
+local hasTool = false
+for _, tool in ipairs(player.Backpack:GetChildren()) do
+    if tool.Name == "Dismantle" then
+        hasTool = true
+        break
+    end
+end
+
+if not hasTool then
+game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("KingofCurses"):FireServer()
+wait(0.1)
+for i = 1, 50 do
+game:GetService("Players").LocalPlayer.Backpack.Dismantle.LocalScript.Event:FireServer()
+end
+   wait(0.2)
+local Player = game:GetService("Players").LocalPlayer
+local Backpack = Player.Backpack
+local Character = Player.Character
+
+for _,v in pairs(Backpack:GetChildren()) do
+   if v:IsA("Tool") or v:IsA("HopperBin") then
+      if v.Name == "Grab Cursed" or v.Name == "Cleave" or v.Name == "Triple Dissect" or v.Name == "Flame Arrow" or v.Name == "Malevolent Shrine" then
+        v:Destroy()
+      end
+   end
+end
+for _,v in pairs(Character:GetChildren()) do
+   if v:IsA("Tool") or v:IsA("HopperBin") then
+     if v.Name == "Grab Cursed" or v.Name == "Cleave" or v.Name == "Triple Dissect" or v.Name == "Flame Arrow" or v.Name == "Malevolent Shrine" then
+       v:Destroy()
+     end
+  end 
+end
+end
+
+if hasTool then
+for i = 1, 50 do
+game:GetService("Players").LocalPlayer.Backpack.Dismantle.LocalScript.Event:FireServer()
+end
+  wait(0.1)
+local Player = game:GetService("Players").LocalPlayer
+local Backpack = Player.Backpack
+local Character = Player.Character
+
+for _,v in pairs(Backpack:GetChildren()) do
+   if v:IsA("Tool") or v:IsA("HopperBin") then
+      if v.Name == "Grab Cursed" or v.Name == "Cleave" or v.Name == "Triple Dissect" or v.Name == "Flame Arrow" or v.Name == "Malevolent Shrine" then
+        v:Destroy()
+      end
+   end
+end
+for _,v in pairs(Character:GetChildren()) do
+   if v:IsA("Tool") or v:IsA("HopperBin") then
+     if v.Name == "Grab Cursed" or v.Name == "Cleave" or v.Name == "Triple Dissect" or v.Name == "Flame Arrow" or v.Name == "Malevolent Shrine" then
+       v:Destroy()
+     end
+  end 
+end
+end
+wait(2)
+k:Stop()
+wait(cooldown)
+    isCooldown = false
+end)
+
+tool.Parent = game.Players.LocalPlayer.Backpack
 end
 
 local tool = Instance.new("Tool")
@@ -168,6 +284,7 @@ coroutine.wrap(godmod)()
 wait(5)
 k:AdjustSpeed(0.2)
 Spookyn:Stop()
+coroutine.wrap(aurad)()
 coroutine.wrap(buffe)()
 Spooky = Instance.new("Sound", game.Workspace)
 Spooky.Name = "Mega epic sound"
@@ -364,6 +481,31 @@ end)
 
 tool.Parent = game.Players.LocalPlayer.Backpack
 
+local tool = Instance.new("Tool")
+tool.Name = "Beatdown"
+tool.RequiresHandle = false
+local cooldown = 6
+
+local isCooldown = false
+tool.Activated:Connect(function()
+if isCooldown then return end
+    isCooldown = true
+local Anim = Instance.new("Animation")
+Anim.AnimationId = "rbxassetid://17866067794"
+local k = game:GetService("Players").LocalPlayer.Character.Humanoid:LoadAnimation(Anim)
+k:Play()
+k:AdjustSpeed(1)
+   task.wait()
+for i = 1, 20 do
+wait()
+game:GetService("ReplicatedStorage").Remotes.Punches:FireServer()
+end
+wait(cooldown)
+    isCooldown = false
+end)
+
+tool.Parent = game.Players.LocalPlayer.Backpack
+
 tool = Instance.new("Tool")
 tool.RequiresHandle = false
 tool.Name = "Get Random Pencil"
@@ -459,17 +601,12 @@ local dedp = Instance.new("Part",dop)
 dedp.Name = "Handle"
 dedp.Color = Color3.new(0.4,0,0)
 dedp.Size = Vector3.new(3,1,8)
-local cooldown = 60
 
-local isCooldown = false
 dop.Activated:Connect(function()
-if isCooldown then return end
-    isCooldown = true
-for i = 1, 10 do
+dop:Destroy()
+for i = 1, 3 do
 game:GetService("ReplicatedStorage").Events.MalevolentShrine2:FireServer()
  end
-wait(cooldown)
-    isCooldown = false
 end)
 end
 
@@ -550,26 +687,3 @@ game.Players.LocalPlayer.CharacterAdded:Connect(onCharacterAdded)
 if game.Players.LocalPlayer.Character then
     onCharacterAdded(game.Players.LocalPlayer.Character)
 end
-
-repeat wait(0.1)
- if game:GetService("Players").LocalPlayer.Character.Humanoid.Health <= 0 then
-local oip = math.random(1, 2)
-   if oip == 1 then
-   Spooky = Instance.new("Sound", game.Workspace)
-Spooky.Name = "Ahhhhh"
-Spooky.SoundId = "rbxassetid://5814804751"
-Spooky.Volume = 1
-Spooky.PlaybackSpeed = 1
-Spooky.Looped = false 
-Spooky:Play()
-  elseif oip == 2 then
-  Spooky = Instance.new("Sound", game.Workspace)
-Spooky.Name = "Puk"
-Spooky.SoundId = "rbxassetid://130833677"
-Spooky.Volume = 10
-Spooky.PlaybackSpeed = 1
-Spooky.Looped = false
-Spooky:Play()
-   end
- end
-until game:GetService("Players").LocalPlayer.Character.Humanoid.Health <= 0
